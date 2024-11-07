@@ -1,0 +1,187 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            Int      @id @default(autoincrement())
+  name          String
+  email         String
+  emailVerified Boolean
+  password      String // Hashed password
+  image         String?
+  phone         String?
+  role          String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@unique([email])
+  @@map("user")
+}
+
+// model Session {
+//   id        String   @id
+//   expiresAt DateTime
+//   ipAddress String?
+//   userAgent String?
+//   userId    String
+//   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+//   @@map("session")
+// }
+
+// model Account {
+//   id           String    @id
+//   accountId    String
+//   providerId   String
+//   userId       String
+//   user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+//   accessToken  String?
+//   refreshToken String?
+//   idToken      String?
+//   expiresAt    DateTime?
+//   password     String?
+
+//   @@map("account")
+// }
+
+// model Verification {
+//   id         String   @id
+//   identifier String
+//   value      String
+//   expiresAt  DateTime
+
+//   @@map("verification")
+// }
+
+model Car {
+  id           Int              @id @default(autoincrement())
+  brand        String
+  chasisNumber String           @unique
+  registration String? // Nullable registration number
+  userId       String?
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+  dates        Dates?
+  costs        Costs?
+  sales        Sales?
+  margins      Margins?
+  creditSales  CreditSales?
+  remarks      Remarks?
+  investments  CarInvestments[]
+}
+
+model Dates {
+  id                      Int       @id @default(autoincrement())
+  carId                   Int       @unique
+  orderDate               DateTime?
+  finalPaymentDate        DateTime?
+  deliveryAtPortDate      DateTime?
+  exitFromPortDate        DateTime?
+  customerAcquisitionDate DateTime?
+  finalClientPaymentDate  DateTime?
+  totalDuration           Int? // Nullable total duration in days
+  remarks                 String?
+  createdAt               DateTime  @default(now())
+  updatedAt               DateTime  @updatedAt
+  car                     Car       @relation(fields: [carId], references: [id])
+}
+
+model Costs {
+  id            Int      @id @default(autoincrement())
+  carId         Int      @unique
+  landingCost   Int?
+  duty          Int?
+  portCharges   Int?
+  clearingCost  Int?
+  fuelAndDriver Int?
+  insurance     Int?
+  serviceCost   Int?
+  otherCost     Int?
+  brokerCost    Int? // Nullable broker cost
+  totalCost     Int?
+  remarks       String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  car           Car      @relation(fields: [carId], references: [id])
+}
+
+model Sales {
+  id                 Int      @id @default(autoincrement())
+  carId              Int      @unique
+  targetMarkup       Decimal  @db.Decimal(20, 2)
+  targetSellingPrice Int
+  actualSellingPrice Int
+  discountPremium    Decimal? @db.Decimal(20, 2)
+  remarks            String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  car                Car      @relation(fields: [carId], references: [id])
+}
+
+model Margins {
+  id             Int      @id @default(autoincrement())
+  carId          Int      @unique
+  marginAbsolute Decimal? @db.Decimal(20, 2)
+  marginRelative Decimal? @db.Decimal(5, 2)
+  remarks        String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  car            Car      @relation(fields: [carId], references: [id])
+}
+
+model CreditSales {
+  id              Int      @id @default(autoincrement())
+  carId           Int      @unique
+  amountPaidSoFar Int
+  pendingBalance  Int?
+  totalAmount     Int
+  paymentNotes    String?
+  status          String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  car             Car      @relation(fields: [carId], references: [id])
+}
+
+model Remarks {
+  id           Int      @id @default(autoincrement())
+  carId        Int      @unique
+  notes        String   @db.Text
+  pendingItems String? // Nullable
+  userId       Int? // Nullable
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  car          Car      @relation(fields: [carId], references: [id])
+}
+
+model CapitalInvestors {
+  id          Int              @id @default(autoincrement())
+  name        String
+  email       String?
+  phone       String?
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  investments CarInvestments[]
+}
+
+model CarInvestments {
+  id            Int      @id @default(autoincrement())
+  carId         Int
+  investorId    Int
+  initialAmount Decimal? @db.Decimal(20, 2)
+  profitShare   Decimal? @db.Decimal(20, 2)
+  commission    Decimal? @db.Decimal(20, 2)
+  totalBalance  Decimal? @db.Decimal(20, 2)
+  remarks       String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  car      Car              @relation(fields: [carId], references: [id])
+  investor CapitalInvestors @relation(fields: [investorId], references: [id])
+
+  @@unique([carId, investorId]) // Ensure unique investment per car and investor
+}
