@@ -50,14 +50,6 @@ async function getData(id: string) {
   return data;
 }
 
-export const formatDate = (date: Date) => {
-  return date.toLocaleDateString("en-US", {
-    formatMatcher: "best fit",
-    // year: "numeric",
-    // month: "short",
-    // day: "numeric",
-  });
-};
 
 export default async function VehicleBentoDashboardComponent({
   params,
@@ -65,7 +57,14 @@ export default async function VehicleBentoDashboardComponent({
   params: { id: string };
 }) {
   const data = await getData(params.id);
-
+  const formatDate = (date: Date) => {
+    return date.toLocaleDateString("en-US", {
+      formatMatcher: "best fit",
+      // year: "numeric",
+      // month: "short",
+      // day: "numeric",
+    });
+  };
   const getProgressPercentage = (current: number, total: number) => {
     return total > 0 ? (current / total) * 100 : 0;
   };
