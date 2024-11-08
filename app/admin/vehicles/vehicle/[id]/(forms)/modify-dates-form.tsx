@@ -35,6 +35,7 @@ import {
 import { Calendar } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
+import { SmartDatetimeInput } from "@/components/ui/extension/smart-datetime-input";
 
 const DatesFormSchema = z.object({
   orderDate: z.date().nullable().optional(),
@@ -113,34 +114,13 @@ export default function ModifyDatesForm({
                   render={({ field }) => (
                     <FormItem className="flex flex-col">
                       <FormLabel>Order Date</FormLabel>
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <FormControl>
-                            <Button
-                              variant={"outline"}
-                              className={cn(
-                                "w-full pl-3 text-left font-normal",
-                                !field.value && "text-muted-foreground"
-                              )}
-                            >
-                              {field.value ? (
-                                format(field.value, "PPP")
-                              ) : (
-                                <span>Pick a date</span>
-                              )}
-                              <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                            </Button>
-                          </FormControl>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0" align="start">
-                          <Calendar
-                            mode="single"
-                            selected={field.value || undefined}
-                            onSelect={field.onChange}
-                            initialFocus
-                          />
-                        </PopoverContent>
-                      </Popover>
+                      <SmartDatetimeInput
+                        name="orderDate"
+                        value={field.value || undefined}
+                        onChange={field.onChange}
+                        onValueChange={(date) => field.onChange(date)}
+                        placeholder="e.g. tomorrow at 3pm"
+                      />
                       <FormDescription>
                         The date the vehicle was ordered
                       </FormDescription>
@@ -154,34 +134,13 @@ export default function ModifyDatesForm({
                   render={({ field }) => (
                     <FormItem className="flex flex-col">
                       <FormLabel>Final Payment Date</FormLabel>
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <FormControl>
-                            <Button
-                              variant={"outline"}
-                              className={cn(
-                                "w-full pl-3 text-left font-normal",
-                                !field.value && "text-muted-foreground"
-                              )}
-                            >
-                              {field.value ? (
-                                format(field.value, "PPP")
-                              ) : (
-                                <span>Pick a date</span>
-                              )}
-                              <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                            </Button>
-                          </FormControl>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0" align="start">
-                          <Calendar
-                            mode="single"
-                            selected={field.value || undefined}
-                            onSelect={field.onChange}
-                            initialFocus
-                          />
-                        </PopoverContent>
-                      </Popover>
+                      <SmartDatetimeInput
+                        name="finalPaymentDate"
+                        value={field.value || undefined}
+                        onChange={field.onChange}
+                        onValueChange={(date) => field.onChange(date)}
+                        placeholder="e.g. tomorrow at 3pm"
+                      />
                       <FormDescription>
                         The date the final payment was made
                       </FormDescription>
@@ -195,34 +154,13 @@ export default function ModifyDatesForm({
                   render={({ field }) => (
                     <FormItem className="flex flex-col">
                       <FormLabel>Delivery At Port Date</FormLabel>
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <FormControl>
-                            <Button
-                              variant={"outline"}
-                              className={cn(
-                                "w-full pl-3 text-left font-normal",
-                                !field.value && "text-muted-foreground"
-                              )}
-                            >
-                              {field.value ? (
-                                format(field.value, "PPP")
-                              ) : (
-                                <span>Pick a date</span>
-                              )}
-                              <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                            </Button>
-                          </FormControl>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0" align="start">
-                          <Calendar
-                            mode="single"
-                            selected={field.value || undefined}
-                            onSelect={field.onChange}
-                            initialFocus
-                          />
-                        </PopoverContent>
-                      </Popover>
+                      <SmartDatetimeInput
+                        name="deliveryAtPortDate"
+                        value={field.value || undefined}
+                        onChange={field.onChange}
+                        onValueChange={(date) => field.onChange(date)}
+                        placeholder="e.g. tomorrow at 3pm"
+                      />
                       <FormDescription>
                         The date the vehicle was delivered at the port
                       </FormDescription>
@@ -236,34 +174,13 @@ export default function ModifyDatesForm({
                   render={({ field }) => (
                     <FormItem className="flex flex-col">
                       <FormLabel>Exit From Port Date</FormLabel>
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <FormControl>
-                            <Button
-                              variant={"outline"}
-                              className={cn(
-                                "w-full pl-3 text-left font-normal",
-                                !field.value && "text-muted-foreground"
-                              )}
-                            >
-                              {field.value ? (
-                                format(field.value, "PPP")
-                              ) : (
-                                <span>Pick a date</span>
-                              )}
-                              <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                            </Button>
-                          </FormControl>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0" align="start">
-                          <Calendar
-                            mode="single"
-                            selected={field.value || undefined}
-                            onSelect={field.onChange}
-                            initialFocus
-                          />
-                        </PopoverContent>
-                      </Popover>
+                      <SmartDatetimeInput
+                        name="exitFromPortDate"
+                        value={field.value || undefined}
+                        onChange={field.onChange}
+                        onValueChange={(date) => field.onChange(date)}
+                        placeholder="e.g. tomorrow at 3pm"
+                      />
                       <FormDescription>
                         The date the vehicle exited the port
                       </FormDescription>
@@ -277,34 +194,13 @@ export default function ModifyDatesForm({
                   render={({ field }) => (
                     <FormItem className="flex flex-col">
                       <FormLabel>Customer Acquisition Date</FormLabel>
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <FormControl>
-                            <Button
-                              variant={"outline"}
-                              className={cn(
-                                "w-full pl-3 text-left font-normal",
-                                !field.value && "text-muted-foreground"
-                              )}
-                            >
-                              {field.value ? (
-                                format(field.value, "PPP")
-                              ) : (
-                                <span>Pick a date</span>
-                              )}
-                              <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                            </Button>
-                          </FormControl>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0" align="start">
-                          <Calendar
-                            mode="single"
-                            selected={field.value || undefined}
-                            onSelect={field.onChange}
-                            initialFocus
-                          />
-                        </PopoverContent>
-                      </Popover>
+                      <SmartDatetimeInput
+                        name="customerAcquisitionDate"
+                        value={field.value || undefined}
+                        onChange={field.onChange}
+                        onValueChange={(date) => field.onChange(date)}
+                        placeholder="e.g. 3 days from now"
+                      />
                       <FormDescription>
                         The date the vehicle was acquired by the customer
                       </FormDescription>
@@ -318,34 +214,13 @@ export default function ModifyDatesForm({
                   render={({ field }) => (
                     <FormItem className="flex flex-col">
                       <FormLabel>Final Client Payment Date</FormLabel>
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <FormControl>
-                            <Button
-                              variant={"outline"}
-                              className={cn(
-                                "w-full pl-3 text-left font-normal",
-                                !field.value && "text-muted-foreground"
-                              )}
-                            >
-                              {field.value ? (
-                                format(field.value, "PPP")
-                              ) : (
-                                <span>Pick a date</span>
-                              )}
-                              <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                            </Button>
-                          </FormControl>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0" align="start">
-                          <Calendar
-                            mode="single"
-                            selected={field.value || undefined}
-                            onSelect={field.onChange}
-                            initialFocus
-                          />
-                        </PopoverContent>
-                      </Popover>
+                      <SmartDatetimeInput
+                        name="finalClientPaymentDate"
+                        value={field.value || undefined}
+                        onChange={field.onChange}
+                        onValueChange={(date) => field.onChange(date)}
+                        placeholder="e.g. tomorrow at 3pm"
+                      />
                       <FormDescription>
                         The date the final payment was made by the customer
                       </FormDescription>

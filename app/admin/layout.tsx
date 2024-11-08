@@ -8,7 +8,9 @@ import {
 import { redirect } from "next/navigation";
 import { ModeToggle } from "@/components/theme-switcher";
 import { DynamicBreadcrumb } from "@/components/dynamic-breadcrumb";
-import { getSession } from "@/auth";
+import { getSession, logout } from "@/auth";
+import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
+import { LogOut } from "lucide-react";
 
 export default async function DashboardLayout({
   children, // will be a page or nested layout
@@ -22,7 +24,7 @@ export default async function DashboardLayout({
   }
   return (
     <SidebarProvider>
-      <AppSidebar />
+      <AppSidebar userData={user} />
       <SidebarInset>
         <header className="flex h-16 shrink-0 items-center justify-between gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
           <div className="flex items-center gap-2 px-4">
@@ -39,3 +41,19 @@ export default async function DashboardLayout({
     </SidebarProvider>
   );
 }
+
+// export const LogoutButton = () => {
+//   return (
+//     <form
+//       action={async () => {
+//         "use server";
+//         await logout();
+//         redirect("/");
+//       }}
+//     >
+//       <DropdownMenuItem>
+//         <button className="w-full text-left text-red-500">Sign Out</button>
+//       </DropdownMenuItem>
+//     </form>
+//   );
+// };

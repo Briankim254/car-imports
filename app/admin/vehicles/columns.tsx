@@ -153,6 +153,7 @@ export const columns: ColumnDef<Vehicle>[] = [
             {/* <DropdownMenuItem>Toggle user verification</DropdownMenuItem> */}
             <DropdownMenuItem
               onClick={async () => {
+                console.log(vehicle);
                 toast.promise(Deletecar(vehicle.id), {
                   loading: "Deleting vehicle...",
                   success: "Vehicle deleted",

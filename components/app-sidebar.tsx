@@ -30,11 +30,6 @@ import {
 
 // This is sample data.
 const data = {
-  user: {
-    name: "Brian Kimutai",
-    email: "kimutai@gmail.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
   teams: [
     {
       name: "Acme Inc",
@@ -113,7 +108,9 @@ const data = {
   ],
 };
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({
+  ...props
+}: React.ComponentProps<typeof Sidebar> & { userData: any }) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>{/* <TeamSwitcher teams={data.teams} /> */}</SidebarHeader>
@@ -122,7 +119,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         {/* <NavProjects projects={data.projects} /> */}
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={props.userData.data} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

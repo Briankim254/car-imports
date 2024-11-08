@@ -15,6 +15,7 @@ import { CreditFormSchema } from "@/app/admin/vehicles/vehicle/[id]/(forms)/modi
 import { investmentsFormSchema } from "@/app/admin/vehicles/vehicle/[id]/(forms)/investments/modify-investstment";
 import { UserFormSchema } from "@/app/admin/users/create/create-user-form";
 import { ProfileFormValues } from "@/app/admin/users/user/[id]/profile-form";
+import { logout } from "@/auth";
 
 export const createUser = async (data: UserFormSchema, id?: number) => {
   try {
@@ -274,7 +275,9 @@ export const ModifySales = async (
         actualSellingPrice: data.actualSellingPrice || 0,
         targetSellingPrice: targetSellingPrice,
         discountPremium: data.actualSellingPrice
-          ? targetSellingPrice - data.actualSellingPrice
+          ? ((data.actualSellingPrice - targetSellingPrice) /
+              targetSellingPrice) *
+            100
           : null,
         remarks: data.remarks,
       },
@@ -284,7 +287,9 @@ export const ModifySales = async (
         actualSellingPrice: data.actualSellingPrice || 0,
         targetSellingPrice: targetSellingPrice,
         discountPremium: data.actualSellingPrice
-          ? targetSellingPrice - data.actualSellingPrice
+          ? ((data.actualSellingPrice - targetSellingPrice) /
+              targetSellingPrice) *
+            100
           : null,
         remarks: data.remarks,
       },
@@ -360,4 +365,9 @@ export const ModifyInvestments = async (
   revalidatePath(`/admin/vehicles/vehicle/${carId}`);
   revalidatePath("/admin/vehicles");
   return;
+};
+
+export const handleLogout = async () => {
+  logout();
+  // redirect("/signin");
 };

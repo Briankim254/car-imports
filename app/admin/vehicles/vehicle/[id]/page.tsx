@@ -50,7 +50,6 @@ async function getData(id: string) {
   return data;
 }
 
-
 export default async function VehicleBentoDashboardComponent({
   params,
 }: {
@@ -268,8 +267,8 @@ export default async function VehicleBentoDashboardComponent({
                   </span>
                 </div>
                 <div className="flex justify-between items-center bg-muted/50 p-2 rounded-md">
-                  <span className="text-sm font-medium text-muted-foreground">
-                    Profit
+                  <span className="text-xs font-medium text-muted-foreground">
+                    Discount / Premium(%){" "}
                   </span>
                   <span className="text-sm font-bold">
                     Ksh {(data?.sales.discountPremium || 0).toFixed(2)}
@@ -317,8 +316,8 @@ export default async function VehicleBentoDashboardComponent({
                   <span className="text-sm font-bold">
                     {(absolute < 0 && "-") || ""}{" "}
                     {(
-                      (Math.abs(absolute) ?? 0) /
-                        (data?.sales?.actualSellingPrice ?? 0) || 0 * 100
+                      ((Math.abs(absolute) ?? 0) /
+                        (data?.sales?.actualSellingPrice ?? 0) || 0) * 100
                     ).toFixed(2)}
                     %
                   </span>
