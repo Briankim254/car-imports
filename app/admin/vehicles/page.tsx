@@ -51,7 +51,9 @@ export default async function Home() {
             <CardDescription>List of all vehicles</CardDescription>
           </CardHeader>
           <CardContent>
-            <DataTable columns={columns} data={vehicle} />
+            {/* <div className="overflow-x-auto"> */}
+              <DataTable columns={columns} data={vehicle} />
+            {/* </div> */}
           </CardContent>
         </Card>
       </div>
