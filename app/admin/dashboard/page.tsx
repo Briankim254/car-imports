@@ -1,12 +1,29 @@
-export default function Page() {
+import BarComponent from "./charts/bar";
+import AreaComponent from "./charts/area";
+import LineComponent from "./charts/line";
+import PieComponent from "./charts/pie";
+import RadarComponent from "./charts/radar";
+
+export default function Component() {
   return (
-    <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-      <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-        <div className="aspect-video rounded-xl bg-muted/50" />
-        <div className="aspect-video rounded-xl bg-muted/50" />
-        <div className="aspect-video rounded-xl bg-muted/50" />
+    <>
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 m-3">
+        <div className="flex flex-col gap-4">
+          <BarComponent />
+        </div>
+        <div className="flex flex-col gap-4">
+          <AreaComponent />
+        </div>
       </div>
-      <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" />
-    </div>
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 m-3 lg:grid-cols-3">
+        <div className="flex flex-col gap-4 md:col-span-2">
+          <LineComponent />
+        </div>
+        <div className="grid grid-cols-2 lg:grid-cols-1 gap-4">
+          <PieComponent />
+          <RadarComponent />
+        </div>
+      </div>
+    </>
   );
 }
