@@ -16,6 +16,7 @@ import { investmentsFormSchema } from "@/app/admin/vehicles/vehicle/[id]/(forms)
 import { UserFormSchema } from "@/app/admin/users/create/create-user-form";
 import { ProfileFormValues } from "@/app/admin/users/user/[id]/profile-form";
 import { logout } from "@/auth";
+import { z } from "zod";
 
 export const createUser = async (data: UserFormSchema, id?: number) => {
   try {
@@ -370,3 +371,91 @@ export const handleLogout = async () => {
   logout();
   // redirect("/signin");
 };
+
+// Define a type for our data
+export type YearData = {
+  id: number;
+  brand: string;
+  costs: {
+    landingCost: number | null;
+  } | null;
+  sales: {
+    actualSellingPrice: number | null;
+  } | null;
+  dates: {
+    exitFromPortDate: Date | null;
+  } | null;
+};
+
+// Zod schema for input validation
+const yearSchema = z.number().int().min(2000).max(2099);
+
+export async function fetchDataForYear(year: number): Promise<YearData[]> {
+  // Validate the input
+  const validatedYear = yearSchema.parse(year);
+
+  // get the landing price, selling price and margin for each car in the given year
+  const data = await prisma.car.findMany({
+    select: {
+      id: true,
+      brand: true,
+      costs: {
+        select: {
+          landingCost: true,
+        },
+      },
+      sales: {
+        select: {
+          actualSellingPrice: true,
+        },
+      },
+      dates: {
+        select: {
+          exitFromPortDate: true,
+        },
+      },
+    },
+    where: {
+      AND: [
+        {
+          dates: {
+            exitFromPortDate: {
+              gte: new Date(validatedYear, 0, 1),
+              lt: new Date(validatedYear + 1, 0, 1),
+            },
+          },
+        },
+        {
+          sales: {
+            actualSellingPrice: {
+              not: undefined,
+            },
+          },
+        },
+      ],
+    },
+  });
+
+  return data;
+}
+
+export async function getDistinctYears(): Promise<number[]> {
+  const years = await prisma.dates.findMany({
+    select: {
+      exitFromPortDate: true,
+    },
+    distinct: ["exitFromPortDate"],
+    orderBy: {
+      orderDate: "desc",
+    },
+  });
+
+  // Extract years from the datetime and remove duplicates
+  const yearsList = years.map((entry) =>
+    entry.exitFromPortDate ? entry.exitFromPortDate.getFullYear() : null
+  );
+  const filteredYears = yearsList.filter((year) => year !== null);
+  const distinctYears = Array.from(new Set(filteredYears));
+
+  return distinctYears;
+}
