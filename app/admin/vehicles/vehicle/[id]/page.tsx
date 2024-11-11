@@ -43,7 +43,6 @@ async function getData(id: string) {
       costs: true,
       sales: true,
       dates: true,
-      margins: true,
     },
   });
 
