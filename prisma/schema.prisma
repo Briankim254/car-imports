@@ -23,41 +23,6 @@ model User {
   @@map("user")
 }
 
-// model Session {
-//   id        String   @id
-//   expiresAt DateTime
-//   ipAddress String?
-//   userAgent String?
-//   userId    String
-//   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-//   @@map("session")
-// }
-
-// model Account {
-//   id           String    @id
-//   accountId    String
-//   providerId   String
-//   userId       String
-//   user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-//   accessToken  String?
-//   refreshToken String?
-//   idToken      String?
-//   expiresAt    DateTime?
-//   password     String?
-
-//   @@map("account")
-// }
-
-// model Verification {
-//   id         String   @id
-//   identifier String
-//   value      String
-//   expiresAt  DateTime
-
-//   @@map("verification")
-// }
-
 model Car {
   id           Int              @id @default(autoincrement())
   brand        String
@@ -69,7 +34,6 @@ model Car {
   dates        Dates?
   costs        Costs?
   sales        Sales?
-  margins      Margins?
   creditSales  CreditSales?
   remarks      Remarks?
   investments  CarInvestments[]
@@ -121,17 +85,6 @@ model Sales {
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
   car                Car      @relation(fields: [carId], references: [id])
-}
-
-model Margins {
-  id             Int      @id @default(autoincrement())
-  carId          Int      @unique
-  marginAbsolute Decimal? @db.Decimal(20, 2)
-  marginRelative Decimal? @db.Decimal(5, 2)
-  remarks        String?
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
-  car            Car      @relation(fields: [carId], references: [id])
 }
 
 model CreditSales {

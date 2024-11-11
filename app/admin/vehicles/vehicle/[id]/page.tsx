@@ -70,7 +70,6 @@ export default async function VehicleBentoDashboardComponent({
   const absolute =
     (data?.sales?.actualSellingPrice ?? 0) - (data?.costs?.totalCost ?? 0);
 
-  console.log(absolute);
   return (
     <div className="container mx-auto p-4">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -244,7 +243,7 @@ export default async function VehicleBentoDashboardComponent({
               <div className="space-y-2">
                 <div className="flex justify-between items-center bg-muted/50 p-2 rounded-md">
                   <span className="text-sm font-medium text-muted-foreground">
-                    Target Markup
+                    Target Markup(%){" "}
                   </span>
                   <span className="text-sm font-bold">
                     {`${data?.sales.targetMarkup}%`}
@@ -255,7 +254,12 @@ export default async function VehicleBentoDashboardComponent({
                     Target Selling Price
                   </span>
                   <span className="text-sm font-bold">
-                    Ksh {data?.sales.targetSellingPrice.toFixed(2)}
+                    {data?.sales.targetSellingPrice.toLocaleString("en-KE", {
+                      style: "currency",
+                      currency: "KES",
+                      trailingZeroDisplay: "stripIfInteger",
+                      compactDisplay: "short",
+                    })}
                   </span>
                 </div>
                 <div className="flex justify-between items-center bg-muted/50 p-2 rounded-md">
@@ -263,7 +267,13 @@ export default async function VehicleBentoDashboardComponent({
                     Actual Selling Price
                   </span>
                   <span className="text-sm font-bold">
-                    Ksh {data?.sales.actualSellingPrice.toFixed(2)}
+                    {" "}
+                    {data?.sales.actualSellingPrice.toLocaleString("en-KE", {
+                      style: "currency",
+                      currency: "KES",
+                      trailingZeroDisplay: "stripIfInteger",
+                      compactDisplay: "short",
+                    })}
                   </span>
                 </div>
                 <div className="flex justify-between items-center bg-muted/50 p-2 rounded-md">
@@ -271,7 +281,7 @@ export default async function VehicleBentoDashboardComponent({
                     Discount / Premium(%){" "}
                   </span>
                   <span className="text-sm font-bold">
-                    Ksh {(data?.sales.discountPremium || 0).toFixed(2)}
+                    {(data?.sales.discountPremium || 0).toFixed(2)} %
                   </span>
                 </div>
               </div>
@@ -295,7 +305,12 @@ export default async function VehicleBentoDashboardComponent({
                     Absolute Margin
                   </span>
                   <span className="text-sm font-bold">
-                    KSh {absolute.toFixed(2)}
+                    {absolute.toLocaleString("en-KE", {
+                      style: "currency",
+                      currency: "KES",
+                      trailingZeroDisplay: "stripIfInteger",
+                      compactDisplay: "short",
+                    })}
                   </span>
                 </div>
                 <Progress
@@ -359,7 +374,12 @@ export default async function VehicleBentoDashboardComponent({
                     Amount Paid
                   </span>
                   <span className="text-sm font-bold">
-                    Ksh{data?.creditSales?.amountPaidSoFar.toFixed(2)}
+                    {data?.creditSales?.amountPaidSoFar.toLocaleString("en-KE", {
+                      style: "currency",
+                      currency: "KES",
+                      trailingZeroDisplay: "stripIfInteger",
+                      compactDisplay: "short",
+                    })}
                   </span>
                 </div>
                 <div className="flex justify-between items-center bg-muted/50 p-2 rounded-md">
@@ -367,7 +387,12 @@ export default async function VehicleBentoDashboardComponent({
                     Pending Balance
                   </span>
                   <span className="text-sm font-bold">
-                    Ksh{(data?.creditSales?.pendingBalance || 0).toFixed(2)}
+                    {(data?.creditSales?.pendingBalance || 0).toLocaleString("en-KE", {
+                      style: "currency",
+                      currency: "KES",
+                      trailingZeroDisplay: "stripIfInteger",
+                      compactDisplay: "short",
+                    })}
                   </span>
                 </div>
                 {(data?.sales?.actualSellingPrice || 0) >
@@ -473,7 +498,12 @@ export default async function VehicleBentoDashboardComponent({
                       Landing Cost
                     </span>
                     <span className="text-sm font-bold">
-                      Ksh {(data?.costs?.landingCost ?? 0).toFixed(2)}
+                      {(data?.costs?.landingCost ?? 0).toLocaleString("en-KE", {
+                      style: "currency",
+                      currency: "KES",
+                      trailingZeroDisplay: "stripIfInteger",
+                      compactDisplay: "short",
+                    })}
                     </span>
                   </div>
                   <div className="flex justify-between items-center bg-muted/50 p-2 rounded-md">
@@ -481,7 +511,12 @@ export default async function VehicleBentoDashboardComponent({
                       Duty
                     </span>
                     <span className="text-sm font-bold">
-                      Ksh {(data?.costs?.duty ?? 0).toFixed(2)}
+                       {(data?.costs?.duty ?? 0).toLocaleString("en-KE", {
+                      style: "currency",
+                      currency: "KES",
+                      trailingZeroDisplay: "stripIfInteger",
+                      compactDisplay: "short",
+                    })}
                     </span>
                   </div>
                   <div className="flex justify-between items-center bg-muted/50 p-2 rounded-md">
@@ -489,7 +524,12 @@ export default async function VehicleBentoDashboardComponent({
                       Port Charges
                     </span>
                     <span className="text-sm font-bold">
-                      Ksh {(data?.costs?.portCharges ?? 0).toFixed(2)}
+                       {(data?.costs?.portCharges ?? 0).toLocaleString("en-KE", {
+                      style: "currency",
+                      currency: "KES",
+                      trailingZeroDisplay: "stripIfInteger",
+                      compactDisplay: "short",
+                    })}
                     </span>
                   </div>
                   <div className="flex justify-between items-center bg-muted/50 p-2 rounded-md">
@@ -497,7 +537,12 @@ export default async function VehicleBentoDashboardComponent({
                       Deliver Order
                     </span>
                     <span className="text-sm font-bold">
-                      Ksh {(0).toFixed(2)}
+                       {(0).toLocaleString("en-KE", {
+                      style: "currency",
+                      currency: "KES",
+                      trailingZeroDisplay: "stripIfInteger",
+                      compactDisplay: "short",
+                    })}
                     </span>
                   </div>
                   <div className="flex justify-between items-center bg-muted/50 p-2 rounded-md">
@@ -505,7 +550,12 @@ export default async function VehicleBentoDashboardComponent({
                       Mss Levy
                     </span>
                     <span className="text-sm font-bold">
-                      Ksh {(0).toFixed(2)}
+                       {(0).toLocaleString("en-KE", {
+                      style: "currency",
+                      currency: "KES",
+                      trailingZeroDisplay: "stripIfInteger",
+                      compactDisplay: "short",
+                    })}
                     </span>
                   </div>
                   <div className="flex justify-between items-center bg-muted/50 p-2 rounded-md">
@@ -513,7 +563,12 @@ export default async function VehicleBentoDashboardComponent({
                       Rediation
                     </span>
                     <span className="text-sm font-bold">
-                      Ksh {(0).toFixed(2)}
+                       {(0).toLocaleString("en-KE", {
+                      style: "currency",
+                      currency: "KES",
+                      trailingZeroDisplay: "stripIfInteger",
+                      compactDisplay: "short",
+                    })}
                     </span>
                   </div>
                   <div className="flex justify-between items-center bg-muted/50 p-2 rounded-md">
@@ -521,7 +576,12 @@ export default async function VehicleBentoDashboardComponent({
                       Fuel and Driver/Lorry
                     </span>
                     <span className="text-sm font-bold">
-                      Ksh {(data?.costs?.fuelAndDriver ?? 0).toFixed(2)}
+                       {(data?.costs?.fuelAndDriver ?? 0).toLocaleString("en-KE", {
+                      style: "currency",
+                      currency: "KES",
+                      trailingZeroDisplay: "stripIfInteger",
+                      compactDisplay: "short",
+                    })}
                     </span>
                   </div>
                   <div className="flex justify-between items-center bg-muted/50 p-2 rounded-md">
@@ -529,7 +589,12 @@ export default async function VehicleBentoDashboardComponent({
                       Insurance/Kg/Without plates
                     </span>
                     <span className="text-sm font-bold">
-                      Ksh {(data?.costs?.insurance ?? 0).toFixed(2)}
+                       {(data?.costs?.insurance ?? 0).toLocaleString("en-KE", {
+                      style: "currency",
+                      currency: "KES",
+                      trailingZeroDisplay: "stripIfInteger",
+                      compactDisplay: "short",
+                    })}
                     </span>
                   </div>
                   <div className="flex justify-between items-center bg-muted/50 p-2 rounded-md">
@@ -537,7 +602,12 @@ export default async function VehicleBentoDashboardComponent({
                       Broker Cost
                     </span>
                     <span className="text-sm font-bold">
-                      Ksh {(data?.costs?.brokerCost ?? 0).toFixed(2)}
+                       {(data?.costs?.brokerCost ?? 0).toLocaleString("en-KE", {
+                      style: "currency",
+                      currency: "KES",
+                      trailingZeroDisplay: "stripIfInteger",
+                      compactDisplay: "short",
+                    })}
                     </span>
                   </div>
                   <div className="flex justify-between items-center bg-muted/50 p-2 rounded-md">
@@ -545,7 +615,12 @@ export default async function VehicleBentoDashboardComponent({
                       Service Cost
                     </span>
                     <span className="text-sm font-bold">
-                      Ksh {(data?.costs?.serviceCost ?? 0).toFixed(2)}
+                       {(data?.costs?.serviceCost ?? 0).toLocaleString("en-KE", {
+                      style: "currency",
+                      currency: "KES",
+                      trailingZeroDisplay: "stripIfInteger",
+                      compactDisplay: "short",
+                    })}
                     </span>
                   </div>
                   <div className="flex justify-between items-center bg-muted/50 p-2 rounded-md">
@@ -553,7 +628,12 @@ export default async function VehicleBentoDashboardComponent({
                       Clearing Cost
                     </span>
                     <span className="text-sm font-bold">
-                      Ksh {(data?.costs?.clearingCost ?? 0).toFixed(2)}
+                       {(data?.costs?.clearingCost ?? 0).toLocaleString("en-KE", {
+                      style: "currency",
+                      currency: "KES",
+                      trailingZeroDisplay: "stripIfInteger",
+                      compactDisplay: "short",
+                    })}
                     </span>
                   </div>
                   <div className="flex justify-between items-center bg-muted/50 p-2 rounded-md">
@@ -561,7 +641,12 @@ export default async function VehicleBentoDashboardComponent({
                       Agency Cost
                     </span>
                     <span className="text-sm font-bold">
-                      Ksh {(0).toFixed(2)}
+                       {(0).toLocaleString("en-KE", {
+                      style: "currency",
+                      currency: "KES",
+                      trailingZeroDisplay: "stripIfInteger",
+                      compactDisplay: "short",
+                    })}
                     </span>
                   </div>
                   <div className="flex justify-between items-center bg-muted/50 p-2 rounded-md">
@@ -569,7 +654,12 @@ export default async function VehicleBentoDashboardComponent({
                       Other Cost
                     </span>
                     <span className="text-sm font-bold">
-                      Ksh {(data?.costs?.otherCost ?? 0).toFixed(2)}
+                       {(data?.costs?.otherCost ?? 0).toLocaleString("en-KE", {
+                      style: "currency",
+                      currency: "KES",
+                      trailingZeroDisplay: "stripIfInteger",
+                      compactDisplay: "short",
+                    })}
                     </span>
                   </div>
                   <div className="flex justify-between items-center bg-muted/50 p-2 rounded-md">
@@ -577,7 +667,12 @@ export default async function VehicleBentoDashboardComponent({
                       Total Cost
                     </span>
                     <span className="text-sm font-bold">
-                      Ksh {(data?.costs?.totalCost ?? 0).toFixed(2)}
+                       {(data?.costs?.totalCost ?? 0).toLocaleString("en-KE", {
+                      style: "currency",
+                      currency: "KES",
+                      trailingZeroDisplay: "stripIfInteger",
+                      compactDisplay: "short",
+                    })}
                     </span>
                   </div>
                   <Separator className="col-span-1 md:col-span-2 lg:col-span-3" />
@@ -639,7 +734,12 @@ export default async function VehicleBentoDashboardComponent({
                       Initial Amount
                     </span>
                     <span className="text-sm font-bold">
-                      Ksh{(investment.initialAmount ?? 0).toFixed(2)}
+                      {(investment.initialAmount ?? 0).toLocaleString("en-KE", {
+                      style: "currency",
+                      currency: "KES",
+                      trailingZeroDisplay: "stripIfInteger",
+                      compactDisplay: "short",
+                    })}
                     </span>
                   </div>
                   <div className="flex justify-between items-center">
@@ -647,7 +747,12 @@ export default async function VehicleBentoDashboardComponent({
                       Profit Share
                     </span>
                     <span className="text-sm font-bold">
-                      Ksh{(investment.profitShare ?? 0).toFixed(2)}
+                      {(investment.profitShare ?? 0).toLocaleString("en-KE", {
+                      style: "currency",
+                      currency: "KES",
+                      trailingZeroDisplay: "stripIfInteger",
+                      compactDisplay: "short",
+                    })}
                     </span>
                   </div>
                   <div className="flex justify-between items-center">
@@ -655,7 +760,12 @@ export default async function VehicleBentoDashboardComponent({
                       Commission
                     </span>
                     <span className="text-sm font-bold">
-                      Ksh{(investment.commission ?? 0).toFixed(2)}
+                      {(investment.commission ?? 0).toLocaleString("en-KE", {
+                      style: "currency",
+                      currency: "KES",
+                      trailingZeroDisplay: "stripIfInteger",
+                      compactDisplay: "short",
+                    })}
                     </span>
                   </div>
                   <div className="flex justify-between items-center">
@@ -663,7 +773,12 @@ export default async function VehicleBentoDashboardComponent({
                       Total Balance
                     </span>
                     <span className="text-sm font-bold">
-                      Ksh{(investment.totalBalance ?? 0).toFixed(2)}
+                      {(investment.totalBalance ?? 0).toLocaleString("en-KE", {
+                      style: "currency",
+                      currency: "KES",
+                      trailingZeroDisplay: "stripIfInteger",
+                      compactDisplay: "short",
+                    })}
                     </span>
                   </div>
                   <Separator />

@@ -18,7 +18,6 @@ export default async function DashboardLayout({
   children: React.ReactNode;
 }) {
   const user = await getSession();
-  console.log(user);
   if (!user) {
     redirect("/signin");
   }

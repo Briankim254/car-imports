@@ -134,7 +134,6 @@ export const UpdateInvestor = async (
   id: number,
   data: EditInvestorFormSchema
 ) => {
-  console.log(data);
   const investor = await prisma.capitalInvestors.update({
     where: { id: id },
     data: {

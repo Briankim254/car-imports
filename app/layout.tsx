@@ -34,7 +34,7 @@ export default function RootLayout({
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           {children}
-          <Toaster position="top-center" closeButton={true} richColors={true} />
+          <Toaster position="top-center" closeButton={true} />
           <Analytics />
           <SpeedInsights />
         </ThemeProvider>
