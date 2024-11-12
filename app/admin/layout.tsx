@@ -16,18 +16,9 @@ import { ModeToggle } from "@/components/theme-switcher";
 import { redirect } from "next/navigation";
 // import { SearchCommandDialog } from "@/components/custom-command";
 import { getSession, logout } from "@/auth";
-import { get } from "http";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
 
 const LayoutPage = async ({ children }: { children: React.ReactNode }) => {
-  const session = await getSession();
-  const user = session?.user;
+  const user = await getSession();
   if (!user) {
     redirect("/signin");
   }

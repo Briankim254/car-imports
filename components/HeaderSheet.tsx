@@ -14,7 +14,6 @@ import {
   Users2,
 } from "lucide-react";
 import Link from "next/link";
-// import { SiMedibangpaint } from "react-icons/si";
 import { usePathname } from "next/navigation";
 
 function HeaderSheet() {

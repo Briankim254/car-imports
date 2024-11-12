@@ -35,7 +35,7 @@ export async function login(data: any) {
   const session = await encrypt({ data, expires });
 
   // Save the session in a cookie
-  cookies().set("auth_session", session, {
+  cookies().set("ea_imports", session, {
     expires,
     httpOnly: true,
     secure: true,
@@ -44,17 +44,17 @@ export async function login(data: any) {
 
 export async function logout() {
   // Destroy the session
-  cookies().set("auth_session", "", { expires: new Date(0) });
+  cookies().delete("ea_imports");
 }
 
 export async function getSession(): Promise<any> {
-  const session = cookies().get("auth_session")?.value;
+  const session = cookies().get("ea_imports")?.value;
   if (!session) return null;
   return await decrypt(session);
 }
 
 export async function updateSession(request: NextRequest) {
-  const session = request.cookies.get("auth_session")?.value;
+  const session = request.cookies.get("ea_imports")?.value;
   if (!session) return;
 
   // Refresh the session so it doesn't expire in 1 day
@@ -62,12 +62,12 @@ export async function updateSession(request: NextRequest) {
   parsed.expires = new Date(Date.now() + 24 * 60 * 60 * 1000);
   const res = NextResponse.next();
   res.cookies.set({
-    name: "auth_session",
+    name: "ea_imports",
     value: await encrypt(parsed),
     httpOnly: true,
     expires: parsed.expires,
     secure: true,
   });
-  
+
   return res;
 }
