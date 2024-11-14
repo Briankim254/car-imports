@@ -387,14 +387,12 @@ export type YearData = {
   } | null;
 };
 
-// Zod schema for input validation
 const yearSchema = z.number().int().min(2000).max(2099);
 
 export async function fetchDataForYear(year: number): Promise<YearData[]> {
-  // Validate the input
   const validatedYear = yearSchema.parse(year);
 
-  // get the landing price, selling price and margin for each car in the given year
+  // get the landing price, selling price , margin and sum of each three for each car in the given year
   const data = await prisma.car.findMany({
     select: {
       id: true,

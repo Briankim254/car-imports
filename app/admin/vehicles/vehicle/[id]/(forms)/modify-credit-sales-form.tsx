@@ -29,6 +29,14 @@ import {
 import { CreditSales } from "@prisma/client";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  ResponsiveModal,
+  ResponsiveModalContent,
+  ResponsiveModalDescription,
+  ResponsiveModalHeader,
+  ResponsiveModalTitle,
+  ResponsiveModalTrigger,
+} from "@/components/ui/extension/responsive-modal";
 
 const CreditFormSchema = z.object({
   amountPaidSoFar: z.coerce.number().optional(),
@@ -71,8 +79,8 @@ export default function ModifyCreditForm({
   }
   return (
     <>
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>
+      <ResponsiveModal open={open} onOpenChange={setOpen}>
+        <ResponsiveModalTrigger asChild>
           <Button variant="ghost" size="icon">
             {credit?.id ? (
               <Pencil className="h-4 w-4" />
@@ -81,14 +89,14 @@ export default function ModifyCreditForm({
             )}
             <span className="sr-only">Edit vehicle overview</span>
           </Button>
-        </DialogTrigger>
-        <DialogContent className="sm:min-w-fit my-3 overflow-y-auto max-h-dvh">
-          <DialogHeader>
-            <DialogTitle>Modify Dates</DialogTitle>
-            <DialogDescription>
+        </ResponsiveModalTrigger>
+        <ResponsiveModalContent className="sm:min-w-fit my-3 overflow-y-auto max-h-dvh">
+          <ResponsiveModalHeader>
+            <ResponsiveModalTitle>Modify Dates</ResponsiveModalTitle>
+            <ResponsiveModalDescription>
               Make changes to the vehicle dates, and save.
-            </DialogDescription>
-          </DialogHeader>
+            </ResponsiveModalDescription>
+          </ResponsiveModalHeader>
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
@@ -139,8 +147,8 @@ export default function ModifyCreditForm({
               </Button>
             </form>
           </Form>
-        </DialogContent>
-      </Dialog>
+        </ResponsiveModalContent>
+      </ResponsiveModal>
     </>
   );
 }

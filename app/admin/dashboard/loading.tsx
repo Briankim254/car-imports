@@ -1,6 +1,7 @@
 import { LoaderCircle } from "lucide-react";
+import React from "react";
 
-export default function Page() {
+function loading() {
   return (
     <div className="flex justify-center items-center min-h-dvh">
       <div className="loader">
@@ -9,3 +10,5 @@ export default function Page() {
     </div>
   );
 }
+
+export default loading;

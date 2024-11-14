@@ -49,6 +49,14 @@ import {
   CommandList,
 } from "@/components/ui/command";
 import { cn } from "@/lib/utils";
+import {
+  ResponsiveModal,
+  ResponsiveModalContent,
+  ResponsiveModalDescription,
+  ResponsiveModalHeader,
+  ResponsiveModalTitle,
+  ResponsiveModalTrigger,
+} from "@/components/ui/extension/responsive-modal";
 
 const investmentsFormSchema = z.object({
   initialAmount: z.coerce.number().multipleOf(0.01),
@@ -95,8 +103,8 @@ export default function ModifyInvestmentsForm({
   }
   return (
     <>
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>
+      <ResponsiveModal open={open} onOpenChange={setOpen}>
+        <ResponsiveModalTrigger asChild>
           <Button variant="ghost" size="icon">
             {capitalInvestment?.id ? (
               <Pencil className="h-4 w-4" />
@@ -105,14 +113,14 @@ export default function ModifyInvestmentsForm({
             )}
             <span className="sr-only">Edit Vehicle Investor</span>
           </Button>
-        </DialogTrigger>
-        <DialogContent className="sm:min-w-fit my-3 overflow-y-auto max-h-dvh">
-          <DialogHeader>
-            <DialogTitle>Modify Investments</DialogTitle>
-            <DialogDescription>
+        </ResponsiveModalTrigger>
+        <ResponsiveModalContent className="sm:min-w-fit my-3 overflow-y-auto max-h-dvh">
+          <ResponsiveModalHeader>
+            <ResponsiveModalTitle>Modify Investments</ResponsiveModalTitle>
+            <ResponsiveModalDescription>
               Make changes to the vehicle investments, and save.
-            </DialogDescription>
-          </DialogHeader>
+            </ResponsiveModalDescription>
+          </ResponsiveModalHeader>
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
@@ -230,8 +238,8 @@ export default function ModifyInvestmentsForm({
               </Button>
             </form>
           </Form>
-        </DialogContent>
-      </Dialog>
+        </ResponsiveModalContent>
+      </ResponsiveModal>
     </>
   );
 }

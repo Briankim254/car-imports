@@ -45,7 +45,7 @@ export const columns: ColumnDef<YearData>[] = [
                 trailingZeroDisplay: "stripIfInteger",
                 compactDisplay: "short",
               })
-            : ""}
+            : "-"}
         </div>
       );
     },
@@ -74,13 +74,13 @@ export const columns: ColumnDef<YearData>[] = [
                 trailingZeroDisplay: "stripIfInteger",
                 compactDisplay: "short",
               })
-            : ""}
+            : "-"}
         </div>
       );
     },
   },
   {
-    id: "actualSellingPrice",
+    id: "margin",
     header: ({ column }) => {
       return (
         <Button
@@ -94,22 +94,25 @@ export const columns: ColumnDef<YearData>[] = [
     },
     cell: ({ row }) => {
       const vehicle = row.original;
+      const margin =
+        (vehicle.sales?.actualSellingPrice ?? 0) -
+        (vehicle.costs?.landingCost ?? 0);
       return (
         <div>
-          {vehicle.sales?.actualSellingPrice
-            ? vehicle.sales.actualSellingPrice.toLocaleString("en-KE", {
+          {margin
+            ? margin.toLocaleString("en-KE", {
                 style: "currency",
                 currency: "KES",
                 trailingZeroDisplay: "stripIfInteger",
                 compactDisplay: "short",
               })
-            : ""}
+            : "-"}
         </div>
       );
     },
   },
   {
-    id: "actualSellingPrice",
+    id: "actualMargin",
     header: ({ column }) => {
       return (
         <Button
@@ -123,18 +126,7 @@ export const columns: ColumnDef<YearData>[] = [
     },
     cell: ({ row }) => {
       const vehicle = row.original;
-      return (
-        <div>
-          {vehicle.sales?.actualSellingPrice
-            ? vehicle.sales.actualSellingPrice.toLocaleString("en-KE", {
-                style: "currency",
-                currency: "KES",
-                trailingZeroDisplay: "stripIfInteger",
-                compactDisplay: "short",
-              })
-            : ""}
-        </div>
-      );
+      return <div>{"-"}</div>;
     },
   },
   {

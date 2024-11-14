@@ -7,7 +7,6 @@ import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {
   Form,
-  FormControl,
   FormDescription,
   FormField,
   FormItem,
@@ -16,26 +15,18 @@ import {
 } from "@/components/ui/form";
 import { toast } from "sonner";
 import React, { useState } from "react";
-import { CalendarIcon, Loader2, Pencil, PlusCircle } from "lucide-react";
+import { Loader2, Pencil, PlusCircle } from "lucide-react";
 import { ModifyDates } from "@/server/actions";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { Dates } from "@prisma/client";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { Calendar } from "@/components/ui/calendar";
-import { cn } from "@/lib/utils";
-import { format } from "date-fns";
 import { SmartDatetimeInput } from "@/components/ui/extension/smart-datetime-input";
+import {
+  ResponsiveModal,
+  ResponsiveModalContent,
+  ResponsiveModalDescription,
+  ResponsiveModalHeader,
+  ResponsiveModalTitle,
+  ResponsiveModalTrigger,
+} from "@/components/ui/extension/responsive-modal";
 
 const DatesFormSchema = z.object({
   orderDate: z.date().nullable().optional(),
@@ -84,8 +75,8 @@ export default function ModifyDatesForm({
   }
   return (
     <>
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>
+      <ResponsiveModal open={open} onOpenChange={setOpen}>
+        <ResponsiveModalTrigger asChild>
           <Button variant="ghost" size="icon">
             {dates?.id ? (
               <Pencil className="h-4 w-4" />
@@ -94,14 +85,14 @@ export default function ModifyDatesForm({
             )}
             <span className="sr-only">Edit vehicle overview</span>
           </Button>
-        </DialogTrigger>
-        <DialogContent className="">
-          <DialogHeader>
-            <DialogTitle>Modify Dates</DialogTitle>
-            <DialogDescription>
+        </ResponsiveModalTrigger>
+        <ResponsiveModalContent className="">
+          <ResponsiveModalHeader>
+            <ResponsiveModalTitle>Modify Dates</ResponsiveModalTitle>
+            <ResponsiveModalDescription>
               Make changes to the vehicle dates, and save.
-            </DialogDescription>
-          </DialogHeader>
+            </ResponsiveModalDescription>
+          </ResponsiveModalHeader>
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
@@ -235,8 +226,8 @@ export default function ModifyDatesForm({
               </Button>
             </form>
           </Form>
-        </DialogContent>
-      </Dialog>
+        </ResponsiveModalContent>
+      </ResponsiveModal>
     </>
   );
 }

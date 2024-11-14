@@ -36,6 +36,14 @@ import { Calendar } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  ResponsiveModal,
+  ResponsiveModalContent,
+  ResponsiveModalDescription,
+  ResponsiveModalHeader,
+  ResponsiveModalTitle,
+  ResponsiveModalTrigger,
+} from "@/components/ui/extension/responsive-modal";
 
 const RemarksFormSchema = z.object({
   notes: z.string(),
@@ -74,8 +82,8 @@ export default function ModifyRemarksForm({
   }
   return (
     <>
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>
+      <ResponsiveModal open={open} onOpenChange={setOpen}>
+        <ResponsiveModalTrigger asChild>
           <Button variant="ghost" size="icon">
             {remarks?.notes ? (
               <Pencil className="h-4 w-4" />
@@ -84,14 +92,14 @@ export default function ModifyRemarksForm({
             )}
             <span className="sr-only">Edit remarks</span>
           </Button>
-        </DialogTrigger>
-        <DialogContent className="">
-          <DialogHeader>
-            <DialogTitle>Update Remarks</DialogTitle>
-            <DialogDescription>
+        </ResponsiveModalTrigger>
+        <ResponsiveModalContent className="">
+          <ResponsiveModalHeader>
+            <ResponsiveModalTitle>Update Remarks</ResponsiveModalTitle>
+            <ResponsiveModalDescription>
               Help us keep track of important information about this vehicle.
-            </DialogDescription>
-          </DialogHeader>
+            </ResponsiveModalDescription>
+          </ResponsiveModalHeader>
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
@@ -125,8 +133,8 @@ export default function ModifyRemarksForm({
               </Button>
             </form>
           </Form>
-        </DialogContent>
-      </Dialog>
+        </ResponsiveModalContent>
+      </ResponsiveModal>
     </>
   );
 }

@@ -29,6 +29,14 @@ import {
 import { Costs } from "@prisma/client";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  ResponsiveModal,
+  ResponsiveModalContent,
+  ResponsiveModalDescription,
+  ResponsiveModalHeader,
+  ResponsiveModalTitle,
+  ResponsiveModalTrigger,
+} from "@/components/ui/extension/responsive-modal";
 
 const CostsFormSchema = z.object({
   landingCost: z.coerce.number().optional(),
@@ -89,8 +97,8 @@ export default function ModifyCostForm({
   }
   return (
     <>
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>
+      <ResponsiveModal open={open} onOpenChange={setOpen}>
+        <ResponsiveModalTrigger asChild>
           <Button variant="ghost" size="icon">
             {costs?.id ? (
               <Pencil className="h-4 w-4" />
@@ -99,14 +107,14 @@ export default function ModifyCostForm({
             )}
             <span className="sr-only">Edit vehicle overview</span>
           </Button>
-        </DialogTrigger>
-        <DialogContent className="sm:min-w-fit my-3 overflow-y-auto max-h-dvh">
-          <DialogHeader>
-            <DialogTitle>Modify Costs</DialogTitle>
-            <DialogDescription>
+        </ResponsiveModalTrigger>
+        <ResponsiveModalContent className="sm:min-w-fit my-3 overflow-y-auto max-h-dvh">
+          <ResponsiveModalHeader>
+            <ResponsiveModalTitle>Modify Costs</ResponsiveModalTitle>
+            <ResponsiveModalDescription>
               Make changes to the vehicle costs, and save.
-            </DialogDescription>
-          </DialogHeader>
+            </ResponsiveModalDescription>
+          </ResponsiveModalHeader>
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
@@ -268,8 +276,8 @@ export default function ModifyCostForm({
               </Button>
             </form>
           </Form>
-        </DialogContent>
-      </Dialog>
+        </ResponsiveModalContent>
+      </ResponsiveModal>
     </>
   );
 }

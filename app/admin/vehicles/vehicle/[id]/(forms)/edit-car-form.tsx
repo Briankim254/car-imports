@@ -25,6 +25,7 @@ import React, { useState } from "react";
 import { Loader2, Pencil } from "lucide-react";
 import { UpdateCar } from "@/server/actions";
 import { Car } from "@prisma/client";
+import { ResponsiveModal, ResponsiveModalContent, ResponsiveModalTrigger } from "@/components/ui/extension/responsive-modal";
 
 const CarFormSchema = z.object({
   brand: z.string().min(2).max(50),
@@ -61,14 +62,14 @@ export default function EditVehicleForm(car: Car) {
   }
   return (
     <>
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>
+      <ResponsiveModal open={open} onOpenChange={setOpen}>
+        <ResponsiveModalTrigger asChild>
           <Button variant="ghost" size="icon">
             <Pencil className="h-4 w-4" />
             <span className="sr-only">Edit vehicle overview</span>
           </Button>
-        </DialogTrigger>
-        <DialogContent>
+        </ResponsiveModalTrigger>
+        <ResponsiveModalContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
               <FormField
@@ -126,8 +127,8 @@ export default function EditVehicleForm(car: Car) {
               </Button>
             </form>
           </Form>
-        </DialogContent>
-      </Dialog>
+        </ResponsiveModalContent>
+      </ResponsiveModal>
     </>
   );
 }

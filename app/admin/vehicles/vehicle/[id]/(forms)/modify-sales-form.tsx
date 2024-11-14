@@ -29,6 +29,14 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { Sales } from "@prisma/client";
 import { Input } from "@/components/ui/input";
+import {
+  ResponsiveModal,
+  ResponsiveModalContent,
+  ResponsiveModalDescription,
+  ResponsiveModalHeader,
+  ResponsiveModalTitle,
+  ResponsiveModalTrigger,
+} from "@/components/ui/extension/responsive-modal";
 
 const SalesFormSchema = z.object({
   targetMarkup: z.coerce.number().multipleOf(0.01),
@@ -76,8 +84,8 @@ export default function ModifySalesForm({
   }
   return (
     <>
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>
+      <ResponsiveModal open={open} onOpenChange={setOpen}>
+        <ResponsiveModalTrigger asChild>
           <Button variant="ghost" size="icon">
             {sales?.id ? (
               <Pencil className="h-4 w-4" />
@@ -86,14 +94,14 @@ export default function ModifySalesForm({
             )}
             <span className="sr-only">Edit vehicle sales</span>
           </Button>
-        </DialogTrigger>
-        <DialogContent className="sm:min-w-fit my-3 overflow-y-auto max-h-dvh">
-          <DialogHeader>
-            <DialogTitle>Modify Sales</DialogTitle>
-            <DialogDescription>
+        </ResponsiveModalTrigger>
+        <ResponsiveModalContent className="sm:min-w-fit my-3 overflow-y-auto max-h-dvh">
+          <ResponsiveModalHeader>
+            <ResponsiveModalTitle>Modify Sales</ResponsiveModalTitle>
+            <ResponsiveModalDescription>
               Make changes to the vehicle sales, and save.
-            </DialogDescription>
-          </DialogHeader>
+            </ResponsiveModalDescription>
+          </ResponsiveModalHeader>
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
@@ -173,8 +181,8 @@ export default function ModifySalesForm({
               </Button>
             </form>
           </Form>
-        </DialogContent>
-      </Dialog>
+        </ResponsiveModalContent>
+      </ResponsiveModal>
     </>
   );
 }

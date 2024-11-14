@@ -20,6 +20,13 @@ import {
 import { LoaderCircle } from "lucide-react";
 import { columns } from "./columns";
 import { DataTable } from "./data-table";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 export default function YearlyDataFetcher() {
   const [year, setYear] = useState<number | null>(null);
@@ -62,6 +69,15 @@ export default function YearlyDataFetcher() {
       </div>
     );
 
+  const totalLandingPrice = data.reduce(
+    (acc, curr) => acc + (curr.costs?.landingCost ?? 0),
+    0
+  );
+  const totalSellingPrice = data.reduce(
+    (acc, curr) => acc + (curr?.sales?.actualSellingPrice ?? 0),
+    0
+  );
+  const totalMargin = totalSellingPrice - totalLandingPrice;
   return (
     <div className="container mx-auto p-4 space-y-4">
       <h1 className="text-2xl font-bold mb-4">Yearly Data Summary</h1>
@@ -86,7 +102,45 @@ export default function YearlyDataFetcher() {
           </div>
         </div>
       ) : (
-        <DataTable data={data} columns={columns} />
+        <Card>
+          <CardHeader>
+            <CardTitle>
+              <CardDescription>
+                {/* display the sum of landing price , selling price and margin */}
+                <div>
+                  Total Landing Price:{" "}
+                  {totalLandingPrice.toLocaleString("en-KE", {
+                    style: "currency",
+                    currency: "KES",
+                    trailingZeroDisplay: "stripIfInteger",
+                    compactDisplay: "short",
+                  })}
+                </div>
+                <div>
+                  Total Selling Price:{" "}
+                  {totalSellingPrice.toLocaleString("en-KE", {
+                    style: "currency",
+                    currency: "KES",
+                    trailingZeroDisplay: "stripIfInteger",
+                    compactDisplay: "short",
+                  })}
+                </div>
+                <div>
+                  Total Margin:{" "}
+                  {totalMargin.toLocaleString("en-KE", {
+                    style: "currency",
+                    currency: "KES",
+                    trailingZeroDisplay: "stripIfInteger",
+                    compactDisplay: "short",
+                  })}
+                </div>
+              </CardDescription>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <DataTable data={data} columns={columns} />
+          </CardContent>
+        </Card>
       )}
     </div>
   );
