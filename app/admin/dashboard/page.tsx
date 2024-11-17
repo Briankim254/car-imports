@@ -3,7 +3,6 @@ import AreaComponent from "./charts/area";
 import LineComponent from "./charts/line";
 import PieComponent from "./charts/pie";
 import RadarComponent from "./charts/radar";
-import prisma from "@/prisma/prisma";
 import { getmonthlyCostAndSales, getYearlyCostAndSales } from "@/lib/utils";
 
 export default async function Dashboard() {

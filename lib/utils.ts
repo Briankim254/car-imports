@@ -74,9 +74,8 @@ export async function getYearlyCostAndSales() {
 
   return chartData;
 }
-
 export async function getmonthlyCostAndSales() {
-  // Fetch costs and sales along with the dates for grouping by month for the last 6 months
+  // Fetch costs and sales along with the dates for grouping by month for the last 12 months
   const costsAndSalesByMonth = await prisma.dates.findMany({
     select: {
       exitFromPortDate: true,
@@ -100,50 +99,54 @@ export async function getmonthlyCostAndSales() {
       OR: [
         {
           exitFromPortDate: {
-            gte: new Date(new Date().setMonth(new Date().getMonth() - 6)),
+            gte: new Date(new Date().setMonth(new Date().getMonth() - 12)),
           },
         },
         {
           finalClientPaymentDate: {
-            gte: new Date(new Date().setMonth(new Date().getMonth() - 6)),
+            gte: new Date(new Date().setMonth(new Date().getMonth() - 12)),
           },
         },
       ],
     },
   });
 
-  // Aggregate costs and sales based on the past 6 months extracted from `exitFromPortDate` and `finalClientPaymentDate`
-  const monthlyyData: {
+  // Initialize monthly data for the past 12 months
+  const monthlyData: {
     [key: number]: { totalCost: number; totalSelling: number };
   } = {};
 
+  for (let i = 0; i < 12; i++) {
+    const month = new Date(
+      new Date().setMonth(new Date().getMonth() - i)
+    ).getMonth();
+    monthlyData[month] = { totalCost: 0, totalSelling: 0 };
+  }
+
+  // Aggregate costs and sales based on the past 12 months extracted from `exitFromPortDate` and `finalClientPaymentDate`
   costsAndSalesByMonth.forEach(
     ({ exitFromPortDate, finalClientPaymentDate, car }) => {
       // Determine the month from `exitFromPortDate` or `finalClientPaymentDate`
       const month = (exitFromPortDate || finalClientPaymentDate)?.getMonth();
 
-      if (month) {
-        if (!monthlyyData[month]) {
-          monthlyyData[month] = { totalCost: 0, totalSelling: 0 };
-        }
-
+      if (month !== undefined) {
         // Sum up total cost and actual selling price per month
-        monthlyyData[month].totalCost += car?.costs?.totalCost || 0;
-        monthlyyData[month].totalSelling += car?.sales?.actualSellingPrice || 0;
+        monthlyData[month].totalCost += car?.costs?.totalCost || 0;
+        monthlyData[month].totalSelling += car?.sales?.actualSellingPrice || 0;
       }
     }
   );
 
   // Format the data into the chart data structure
-  const chartData = Object.keys(monthlyyData).map((month) => ({
+  const chartData = Object.keys(monthlyData).map((month) => ({
     month: new Date(0, Number(month)).toLocaleString("default", {
       month: "short",
     }),
-    totalCost: monthlyyData[Number(month)].totalCost,
-    totalSelling: monthlyyData[Number(month)].totalSelling,
+    totalCost: monthlyData[Number(month)].totalCost,
+    totalSelling: monthlyData[Number(month)].totalSelling,
     margin:
-      monthlyyData[Number(month)].totalSelling -
-      monthlyyData[Number(month)].totalCost,
+      monthlyData[Number(month)].totalSelling -
+      monthlyData[Number(month)].totalCost,
   }));
 
   return chartData;

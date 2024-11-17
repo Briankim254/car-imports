@@ -59,24 +59,24 @@ export default function BarComponent({ chartData }: { chartData: any[] }) {
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
-            <BarChart accessibilityLayer data={chartData}>
+          <BarChart accessibilityLayer data={chartData}>
             <CartesianGrid vertical={false} />
             <XAxis
               dataKey="year"
-              tickLine={false}
+              tickLine={true}
               tickMargin={10}
-              axisLine={false}
+              axisLine={true}
               tickFormatter={(value) => value.toString()}
             />
             <YAxis
               tickLine={false}
-              tickMargin={10}
+              tickMargin={2}
               axisLine={false}
               tickFormatter={(value) => `ksh${(value / 1_000_000).toFixed(1)}M`}
             />
             <ChartTooltip
               cursor={true}
-              content={<ChartTooltipContent indicator="line"  />}
+              content={<ChartTooltipContent indicator="line" />}
             />
             <Bar dataKey="totalCost" fill="var(--color-totalCost)" radius={4} />
             <Bar
@@ -84,7 +84,7 @@ export default function BarComponent({ chartData }: { chartData: any[] }) {
               fill="var(--color-totalSelling)"
               radius={4}
             />
-            </BarChart>
+          </BarChart>
         </ChartContainer>
       </CardContent>
       {/* <CardFooter className="flex-col items-start gap-2 text-sm">

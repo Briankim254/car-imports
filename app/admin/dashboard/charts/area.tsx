@@ -1,7 +1,7 @@
 "use client";
 
-import { Frown, TrendingUp } from "lucide-react";
-import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
+import { Frown, TrendingDown, TrendingUp, TrendingUpDown } from "lucide-react";
+import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
 
 import {
   Card,
@@ -33,14 +33,17 @@ const chartConfig = {
   totalCost: {
     label: "Total Cost",
     color: "hsl(var(--chart-1))",
+    icon: TrendingDown,
   },
   totalSelling: {
     label: "Total Selling Price",
     color: "hsl(var(--chart-2))",
+    icon: TrendingUp,
   },
   margin: {
     label: "Margin",
     color: "hsl(var(--chart-3))",
+    icon: TrendingUpDown,
   },
 } satisfies ChartConfig;
 
@@ -61,16 +64,25 @@ export default function AreaComponent({ chartData }: { chartData: any[] }) {
               data={chartData}
               margin={{
                 left: 12,
-                right: 12,
+                right: 2,
+                top: 12,
               }}
             >
               <CartesianGrid vertical={false} />
               <XAxis
                 dataKey="month"
+                tickLine={true}
+                axisLine={true}
+                tickMargin={10}
+                tickFormatter={(value) => value.slice(0, 3)}
+              />
+              <YAxis
                 tickLine={false}
                 axisLine={false}
-                tickMargin={8}
-                tickFormatter={(value) => value.slice(0, 3)}
+                tickMargin={2}
+                tickFormatter={(value) =>
+                  `ksh${(value / 1_000_000).toFixed(1)}M`
+                }
               />
               <ChartTooltip
                 cursor={false}
@@ -79,7 +91,7 @@ export default function AreaComponent({ chartData }: { chartData: any[] }) {
               <Area
                 dataKey="totalCost"
                 type="natural"
-                fill="var(--color-mobile)"
+                fill="var(--color-totalCost)"
                 fillOpacity={0.4}
                 stroke="var(--color-totalCost)"
                 stackId="a"
@@ -87,7 +99,7 @@ export default function AreaComponent({ chartData }: { chartData: any[] }) {
               <Area
                 dataKey="totalSelling"
                 type="natural"
-                fill="var(--color-desktop)"
+                fill="var(--color-totalSelling)"
                 fillOpacity={0.4}
                 stroke="var(--color-totalSelling)"
                 stackId="a"
